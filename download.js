@@ -18,7 +18,7 @@ function go()
             }
             else
             {
-                console.log("## Retry " + failed_retry + " times");
+                console.log("## Retrying " + failed_retry + " times ##");
             }
         }
 

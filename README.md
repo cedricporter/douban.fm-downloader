@@ -18,6 +18,8 @@
 
 1. 打开<http://douban.fm>
 1. 在douban.fm的页面打开console。
-1. 将这段下载192kbps mp3的javascript粘贴进入console，按下回车
+1. 输入`$.getScript("https://raw.github.com/cedricporter/douban.fm-downloader/master/download.js")`
 
 好，剩下的就是等待完成了。
+
+如果需要下载列表json，可以输入`download_json`。
