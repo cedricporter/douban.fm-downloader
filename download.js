@@ -1,3 +1,6 @@
+// Author: Hua Liang[Stupid ET]
+// Website: http://EverET.org
+
 var download_timeout, current_song_number = 0;
 var songs_number = 500;
 var last_size = -1;
