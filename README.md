@@ -22,4 +22,4 @@
 
 好，剩下的就是等待完成了。
 
-如果需要下载列表json，可以输入`download_json`。
+如果需要下载列表json，可以输入`download_json()`，然后就可以下载当前获取到列表json。
