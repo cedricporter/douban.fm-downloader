@@ -1,6 +1,7 @@
 var download_timeout, current_song_number = 0;
 var songs_number = 500;
 var last_size = -1;
+var failed_retry = 0;
 
 function go()
 {
@@ -10,9 +11,18 @@ function go()
         var len = Object.keys(links_json).length;
         if (last_size === len)
         {
-            console.log("## Stopped ##");
-            return;
+            if (failed_retry++ > 5)
+            {
+                console.log("## Stopped ##");
+                return;
+            }
+            else
+            {
+                console.log("## Retry " + failed_retry + " times");
+            }
         }
+
+        failed_retry = 0;
         console.log("Current list size: " + len);
         last_size = len;
 
