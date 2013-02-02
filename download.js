@@ -14,7 +14,7 @@ function go()
         var len = Object.keys(links_json).length;
         if (last_size === len)
         {
-            if (failed_retry++ > 5)
+            if (failed_retry++ > 10)
             {
                 console.log("## Stopped ##");
                 return;
@@ -25,11 +25,16 @@ function go()
             }
         }
 
-        failed_retry = 0;
+        // failed_retry = 0;
         console.log("Current list size: " + len);
         last_size = len;
+        if (len % 10 === 0)
+        {
+            download_json();
+        }
 
-        download_timeout = setTimeout(go, 5 * 1000);
+        var sleep_time = Math.ceil(Math.random() * (6 - 4) + 4);
+        download_timeout = setTimeout(go, sleep_time * 1000);
     }
     catch (err)
     {
@@ -45,7 +50,7 @@ function stop()
 
 function download_json()
 {
-    $("<a href='" + "data:application/octet-stream," + encodeURIComponent(JSON.stringify(links_json)) + "' download='list.json'/>")[0].click();
+    $("<a href='" + "data:application/x-json;base64," + encodeURIComponent(JSON.stringify(links_json)) + "' download='list.json'/>")[0].click();
 }
 
 
@@ -59,7 +64,8 @@ window.extStatusHandler = function(a) {
     if (o.type == 'start') {
         var s = o.song;
         var name = s.title + ".mp3";
-        links_json[name] = s.url;
+        links_json[s.url] = name;
+        // links_json[name] = s.url;
     }
 }
 
