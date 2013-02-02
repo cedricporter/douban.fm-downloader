@@ -48,10 +48,10 @@ function stop()
     clearTimeout(download_timeout);
 }
 
-function download_json()
-{
-    $("<a href='" + "data:application/x-json;base64," + encodeURIComponent(JSON.stringify(links_json)) + "' download='list.json'/>")[0].click();
-}
+// function download_json()
+// {
+//     $("<a href='" + "data:application/x-json;base64," + encodeURIComponent(JSON.stringify(links_json)) + "' download='list.json'/>")[0].click();
+// }
 
 
 // Thanks to `douban.fm Hacker`
