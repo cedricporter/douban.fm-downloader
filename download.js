@@ -11,7 +11,7 @@ function go()
     try
     {
         window.DBR.act("skip");     // next song
-        var len = Object.keys(links_json).length;
+        var len = Object.keys(song_list).length;
         if (last_size === len)
         {
             if (failed_retry++ > 10)
@@ -48,25 +48,37 @@ function stop()
     clearTimeout(download_timeout);
 }
 
-// function download_json()
-// {
-//     $("<a href='" + "data:application/x-json;base64," + encodeURIComponent(JSON.stringify(links_json)) + "' download='list.json'/>")[0].click();
-// }
+function download_json()
+{
+    $("<a href='" + "data:application/x-json;base64," + encodeURIComponent(JSON.stringify(song_list)) + "' download='list.json'/>")[0].click();
+}
 
 
 // Thanks to `douban.fm Hacker`
 // hook to douban.fm's handler
-var extStatusHandlerBak = window.extStatusHandler;
-var links_json = {};
-window.extStatusHandler = function(a) {
-    extStatusHandlerBak(a);
-    var o = eval('(' + a + ')');
-    if (o.type == 'start') {
-        var s = o.song;
-        var name = s.title + ".mp3";
-        links_json[s.url] = name;
-        // links_json[name] = s.url;
-    }
+
+if (extStatusHandlerBak) {
+    window.extStatusHandler = extStatusHandlerBak;
 }
+var extStatusHandlerBak = window.extStatusHandler;
+var song_list = {};
+var playlist;
+window.extStatusHandler = function(a) {
+    // run real douban.fm handler
+    extStatusHandlerBak(a);
+    
+    var o = eval('(' + a + ')');
+    console.log(o);
+    if (o.type == 'nl') {
+        playlist = o.playlist;
+        for (var i = 0; i < o.playlist.length; i++) {
+            var song = o.playlist[i];
+            var save_file = song.title + ".mp3";
+            song_list[save_file] = song.url; 
+        }
+    }
+};
+
+
 
 go();
